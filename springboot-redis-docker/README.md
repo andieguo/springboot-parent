@@ -79,10 +79,10 @@ guodong@mars springboot-redis-docker % mvn package spring-boot:repackage
 
 - 构建Dockerfile
 
-> VOLUME ["/data"] 创建一个可以从本地主机或其他容器挂载的挂载点；  
-> ADD \<src> \<dest> 该命令将复制指定的\<src>到容器中的\<dest>  
-> ENTRYPOINT 配置容器启动后执行的命令，每个Dockerfile中只能有一个ENTRYPOINT  
-> EXPOSE <port> 告诉Docker服务端容器暴露的端口号  
+> 1) VOLUME ["/data"] 创建一个可以从本地主机或其他容器挂载的挂载点；  
+> 2) ADD \<src> \<dest> 该命令将复制指定的\<src>到容器中的\<dest>  
+> 3) ENTRYPOINT 配置容器启动后执行的命令，每个Dockerfile中只能有一个ENTRYPOINT  
+> 4) EXPOSE <port> 告诉Docker服务端容器暴露的端口号  
 
 ``` bash
 FROM java:8
@@ -94,8 +94,8 @@ EXPOSE 8082
 
 - 创建镜像
 > docker build -t springboot-redis-docker src/docker/ 命令:     
-> 1）通过-t 指定镜像的标签信息，希望生成镜像标签为springboot-redis-docker  
-> 2）指定Dockerfile所在路径为src/docker/    
+> 1) 通过-t 指定镜像的标签信息，希望生成镜像标签为springboot-redis-docker  
+> 2) 指定Dockerfile所在路径为src/docker/    
 
 ``` bash
 guodong@mars springboot-redis-docker % cd springboot-redis-docker
@@ -106,12 +106,18 @@ REPOSITORY                       TAG                 IMAGE ID            CREATED
 springboot-redis-docker         latest              c5150ce0e9f6        36 minutes ago      660MB
 ```
 
-- 运行容器
-> 分别启动3个webapp容器,端口号分别为8082、8083、8084
+- 运行容器  
+分别启动3个webapp容器,端口号分别为8082、8083、8084
+> link 是在两个contain之间建立一种父子关系，父container中的web，可以得到子container db上的信息。
+  通过link的方式创建容器，我们可以使用被Link容器的别名进行访问，而不是通过IP，解除了对IP的依赖。
+  不过，link的方式只能解决单机容器间的互联，多机的情况下，需要通过别的方式进行连接。
+  --link=container_name or id:name 使用这个选项在你运行一个容器时，可以在此容器的/etc/hosts文件中增加一个额外的name主机名，这个名字为container_name的容器的IP地址的别名。这使得新容器的内部进程可以访问主机名为name的容器而不用知道它的Ip。
+  内网是走docker0的网桥，互相之间是Ping的通的，但是docker run 建立容器的时候，它的Ip地址是不可控制的，所以docker 用link的方式使web能够访问到db中的数据。
+
 ``` bash
-guodong@mars springboot-redis-docker % docker run -p 8082:8082 --name springboot-redis-docker-8082 -d springboot-redis-docker
-guodong@mars springboot-redis-docker % docker run -p 8083:8082 --name springboot-redis-docker-8083 -d springboot-redis-docker
-guodong@mars springboot-redis-docker % docker run -p 8084:8082 --name springboot-redis-docker-8084 -d springboot-redis-docker
+guodong@mars springboot-redis-docker % docker run -p 8082:8082 --name springboot-redis-docker-8082 --link redis:redis -d springboot-redis-docker
+guodong@mars springboot-redis-docker % docker run -p 8083:8082 --name springboot-redis-docker-8083 --link redis:redis -d springboot-redis-docker
+guodong@mars springboot-redis-docker % docker run -p 8084:8082 --name springboot-redis-docker-8084 --link redis:redis -d springboot-redis-docker
 guodong@mars springboot-redis-docker % docker ps
 ```
 
