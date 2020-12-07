@@ -1,0 +1,112 @@
+# springboot-redis-demo
+本工程是关于SpringBoot与Redis集成的入门级demo工程
+
+### 什么是Redis
+
+　　Redis 是一个速度非常快的非关系数据库（Non-Relational Database），它可以存储键（Key）与 多种不同类型的值（Value）之间的映射（Mapping），可以将存储在内存的键值对数据持久化到硬盘，可以使用复制特性来扩展读性能，还可以使用客户端分片来扩展写性能。Redis主要有以下几个优点：
+
+　　1 性能极高，它每秒可执行约 100,000 个 Set 以及约 100,000 个 Get 操作；
+
+　　2 丰富的数据类型，Redis 对大多数开发人员已知的大多数数据类型提供了原生支持，这使得各种问题得以轻松解决；
+
+　　3 原子性，因为所有 Redis 操作都是原子性的，所以多个客户端会并发地访问一个 Redis 服务器，获取相同的更新值；
+
+　　4 丰富的特性，Redis 是一个多效用工具，有非常多的应用场景，包括缓存、消息队列（Redis 原生支持发布/订阅）、短期应用程序数据（比如 Web 会话、Web 页面命中计数）等。
+
+　　目前我们常用的Value的数据类型有String(字符串)，Hash(哈希)，List(列表)，Set(集合)，Zset(有序集合)。
+
+### docker + redis 单机环境搭建
+
+镜像地址：https://hub.docker.com/_/redis?tab=tags 
+
+• 获取最新版本镜像
+
+``` bash
+guodong@mars ~ % docker pull redis
+Using default tag: latest
+latest: Pulling from library/redis
+852e50cd189d: Already exists 
+76190fa64fb8: Pull complete 
+9cbb1b61e01b: Pull complete 
+d048021f2aae: Pull complete 
+6f4b2af24926: Pull complete 
+1cf1d6922fba: Pull complete 
+Digest: sha256:5b98e32b58cdbf9f6b6f77072c4915d5ebec43912114031f37fa5fa25b032489
+Status: Downloaded newer image for redis:latest
+docker.io/library/redis:latest
+guodong@mars ~ % docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+redis               latest              74d107221092        2 weeks ago         104MB
+
+```
+
+• 启动redis容器
+
+> -p 6379:6379：映射容器服务的 6379 端口到宿主机的 6379 端口。外部可以直接通过宿主机ip:6379 访问到 Redis 的服务。
+
+``` bash
+guodong@mars ~ % docker run -itd --name redis-latest -p 6379:6379 redis
+33fc27668e5cc28fb002032227cc9f772b8931348330ef55c9a8c5bc292899eb
+```
+
+• 连接到容器的伪终端
+
+``` bash
+Last login: Sun Dec  6 10:45:44 on ttys000
+guodong@mars ~ % docker exec -it 33fc27668e5cc28fb002032227cc9f772b8931348330ef55c9a8c5bc292899eb /bin/sh; exit
+# redis-cli
+127.0.0.1:6379> set test 1
+OK
+127.0.0.1:6379> get test
+"1"
+127.0.0.1:6379> set test 2
+OK
+127.0.0.1:6379> get test
+"2"
+
+```
+
+### 源码分析
+
+- spring.factory RedisRepositoryFactory
+
+- RedisConnectionFactory实现类：LettuceConnectionFactory
+
+
+
+### SpringBoot与Redis集成
+1.SpringBoot与web集成
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+```
+
+2.SpringBoot与Redis集成
+
+``` xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+    <version>2.4.0</version>
+</dependency>
+<!--Redis自定义配置需要该配置-->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-pool2</artifactId>
+    <version>2.9.0</version>
+</dependency>
+```
+
+
+### 基本配置
+
+### 自定义参数配置
+
+### 待办事项
+
+- redis常用命令
+- docker + redis分布式集群搭建
