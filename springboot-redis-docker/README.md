@@ -48,7 +48,7 @@ redis               latest              74d107221092        2 weeks ago         
 > -p 6379:6379：映射容器服务的 6379 端口到宿主机的 6379 端口。外部可以直接通过宿主机ip:6379 访问到 Redis 的服务。
 
 ``` bash
-guodong@mars ~ % docker run -itd --name redis-latest -p 6379:6379 redis
+guodong@mars ~ % docker run -itd --name redis -p 6379:6379 redis
 33fc27668e5cc28fb002032227cc9f772b8931348330ef55c9a8c5bc292899eb
 ```
 
@@ -93,9 +93,9 @@ EXPOSE 8082
 ```
 
 - 创建镜像
-> docker build -t springboot-redis-docker src/docker/ 命令:   
-> 通过-t 指定镜像的标签信息，希望生成镜像标签为springboot-redis-docker
-> 指定Dockerfile所在路径为src/docker/  
+> docker build -t springboot-redis-docker src/docker/ 命令:     
+> 1）通过-t 指定镜像的标签信息，希望生成镜像标签为springboot-redis-docker  
+> 2）指定Dockerfile所在路径为src/docker/    
 
 ``` bash
 guodong@mars springboot-redis-docker % cd springboot-redis-docker
@@ -115,10 +115,10 @@ guodong@mars springboot-redis-docker % docker run -p 8084:8082 --name springboot
 guodong@mars springboot-redis-docker % docker ps
 ```
 
-- 访问
-http://localhost:8082
-http://localhost:8083
-http://localhost:8084
+- 访问  
+http://localhost:8082  
+http://localhost:8083  
+http://localhost:8084  
 
 ### SpringBoot与Redis集成解读
 1.SpringBoot与web集成
