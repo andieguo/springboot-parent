@@ -107,7 +107,7 @@ springboot-redis-docker         latest              c5150ce0e9f6        36 minut
 ```
 
 - 运行容器
-
+> 分别启动3个webapp容器,端口号分别为8082、8083、8084
 ``` bash
 guodong@mars springboot-redis-docker % docker run -p 8082:8082 --name springboot-redis-docker-8082 -d springboot-redis-docker
 guodong@mars springboot-redis-docker % docker run -p 8083:8082 --name springboot-redis-docker-8083 -d springboot-redis-docker
