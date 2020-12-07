@@ -1,4 +1,4 @@
-# springboot-redis-demo
+# springboot-redis-docker
 本工程是关于SpringBoot与Redis集成的入门级demo工程
 
 ### 什么是Redis
