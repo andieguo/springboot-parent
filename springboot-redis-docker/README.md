@@ -15,7 +15,10 @@
 
 　　目前我们常用的Value的数据类型有String(字符串)，Hash(哈希)，List(列表)，Set(集合)，Zset(有序集合)。
 
-### docker + redis 单机环境搭建
+
+### Docker部署Redis单机环境、SpringBoot应用
+
+#### Docker部署Redis单机环境
 
 镜像地址：https://hub.docker.com/_/redis?tab=tags 
 
@@ -66,15 +69,58 @@ OK
 
 ```
 
-### 源码分析
+#### Docker部署SpringBoot应用
 
-- spring.factory RedisRepositoryFactory
+- 打包
 
-- RedisConnectionFactory实现类：LettuceConnectionFactory
+``` bash 
+guodong@mars springboot-redis-docker % mvn package spring-boot:repackage
+```
 
+- 构建Dockerfile
 
+> VOLUME ["/data"] 创建一个可以从本地主机或其他容器挂载的挂载点；  
+> ADD \<src> \<dest> 该命令将复制指定的\<src>到容器中的\<dest>  
+> ENTRYPOINT 配置容器启动后执行的命令，每个Dockerfile中只能有一个ENTRYPOINT  
+> EXPOSE <port> 告诉Docker服务端容器暴露的端口号  
 
-### SpringBoot与Redis集成
+``` bash
+FROM java:8
+VOLUME /tmp
+ADD springboot-redis-docker-1.0.0.jar springboot-redis-docker-1.0.0.jar
+ENTRYPOINT ["java","-jar","/springboot-redis-docker-1.0.0.jar"]
+EXPOSE 8082
+```
+
+- 创建镜像
+> docker build -t springboot-redis-docker src/docker/ 命令:   
+> 通过-t 指定镜像的标签信息，希望生成镜像标签为springboot-redis-docker
+> 指定Dockerfile所在路径为src/docker/  
+
+``` bash
+guodong@mars springboot-redis-docker % cd springboot-redis-docker
+guodong@mars springboot-redis-docker % cp target/springboot-redis-docker-1.0.0.jar src/docker/
+guodong@mars springboot-redis-docker % docker build -t springboot-redis-docker src/docker/
+guodong@mars springboot-redis-docker % docker images
+REPOSITORY                       TAG                 IMAGE ID            CREATED             SIZE
+springboot-redis-docker         latest              c5150ce0e9f6        36 minutes ago      660MB
+```
+
+- 运行容器
+
+``` bash
+guodong@mars springboot-redis-docker % docker run -p 8082:8082 --name springboot-redis-docker-8082 -d springboot-redis-docker
+guodong@mars springboot-redis-docker % docker run -p 8083:8082 --name springboot-redis-docker-8083 -d springboot-redis-docker
+guodong@mars springboot-redis-docker % docker run -p 8084:8082 --name springboot-redis-docker-8084 -d springboot-redis-docker
+guodong@mars springboot-redis-docker % docker ps
+```
+
+- 访问
+http://localhost:8082
+http://localhost:8083
+http://localhost:8084
+
+### SpringBoot与Redis集成解读
 1.SpringBoot与web集成
 
 ```xml
@@ -100,13 +146,18 @@ OK
     <version>2.9.0</version>
 </dependency>
 ```
+#### 基本配置
+
+#### 自定义参数配置
+
+#### starter源码分析
+
+- spring.factory RedisRepositoryFactory
+
+- RedisConnectionFactory实现类：LettuceConnectionFactory
 
 
-### 基本配置
-
-### 自定义参数配置
-
-### 待办事项
+#### 待办事项
 
 - redis常用命令
 - docker + redis分布式集群搭建

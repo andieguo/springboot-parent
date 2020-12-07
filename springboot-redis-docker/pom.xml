@@ -9,8 +9,8 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>springboot-redis-docker</artifactId>
-    <version>1.0.0</version>
-    <packaging>war</packaging>
+    <version>2.0.0</version>
+    <packaging>jar</packaging>
     <name>springboot-redis-docker</name>
     <properties>
         <java.version>1.8</java.version>
