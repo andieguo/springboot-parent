@@ -1,13 +1,33 @@
 version: "3"
 
 services:
-  webapp:
-    container_name: springboot-redis-docker
+  webapp1:
+    container_name: springboot-redis-docker-8083
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8082:8082"
+      - "8083:8082"
+    depends_on:
+      - redis
+
+  webapp2:
+    container_name: springboot-redis-docker-8084
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8082"
+    depends_on:
+      - redis
+
+  webapp3:
+    container_name: springboot-redis-docker-8085
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8082"
     depends_on:
       - redis
 
