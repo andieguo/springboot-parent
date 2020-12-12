@@ -71,7 +71,7 @@ OK
 
 #### Docker部署SpringBoot应用
 
-- 打包
+- mvn命令打包springboot应用
 
 ``` bash 
 guodong@mars springboot-redis-docker % mvn package spring-boot:repackage

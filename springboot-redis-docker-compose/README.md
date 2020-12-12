@@ -18,7 +18,7 @@
 
 [_docker-compose.yml_](docker-compose.yml)
 
-compose file定义了4个services：包括3个webapp，1个nginx
+compose file定义了4个services：包括3个webapp，1个redis
 
 ```
 version: "3"
@@ -83,7 +83,7 @@ CONTAINER ID        IMAGE                                     COMMAND           
 3231b4d7dd3a        redis:latest                              "docker-entrypoint.s…"   16 minutes ago      Up 16 minutes       0.0.0.0:6379->6379/tcp             redis
 ```
 
-- webapp应用程序和nginx启动后, 访问：`http://localhost:8083` :
+- webapp应用程序、redis启动后, 通过不同的端口号访问webapp :
 ```
 guodong@mars gitworkspace % curl localhost:8083
 That's one small step for man,one giant leap for mankind,21%                                                                                 
