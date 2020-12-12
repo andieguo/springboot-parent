@@ -5,7 +5,8 @@ services:
   container_name: nginx_8085
   image: nginx
   volumes:
-   - ./html-8085/:/usr/share/nginx/html
+   - ./nginx-8085/html/:/usr/share/nginx/html
+   - ./nginx-8085/log/:/var/log/nginx/
   ports:
    - "8085:80"
 
@@ -13,7 +14,8 @@ services:
   container_name: nginx_8086
   image: nginx
   volumes:
-   - ./html-8086/:/usr/share/nginx/html
+   - ./nginx-8086/html/:/usr/share/nginx/html
+   - ./nginx-8086/log/:/var/log/nginx/
   ports:
    - "8086:80"   
 
@@ -21,6 +23,7 @@ services:
   container_name: nginx_8087
   image: nginx
   volumes:
-   - ./html-8087/:/usr/share/nginx/html
+   - ./nginx-8087/html/:/usr/share/nginx/html
+   - ./nginx-8087/log/:/var/log/nginx/
   ports:
    - "8087:80"
