@@ -77,7 +77,7 @@ OK
 guodong@mars springboot-redis-docker % mvn package spring-boot:repackage
 ```
 
-- 构建Dockerfile
+- 构建[Dockerfile](src/docker/Dockerfile)
 
 > 1) VOLUME ["/data"] 创建一个可以从本地主机或其他容器挂载的挂载点；  
 > 2) ADD \<src> \<dest> 该命令将复制指定的\<src>到容器中的\<dest>  

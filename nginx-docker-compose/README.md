@@ -1,5 +1,6 @@
-## 使用 docker + compose + nginx 实现负载均衡
+## nginx-docker-compose
 
+本工程使用 docker + compose + nginx 实现负载均衡
 
 ### 1.使用docker compose实现nginx部署
 
@@ -9,7 +10,7 @@
 guodong@mars gitworkspace % docker pull nginx
 ```
 
-- 创建docker-compose.yaml
+- 创建[_docker-compose.yaml_](simple/docker-compose.yaml)
 
 > 参见：nginx-docker-compose/simple/docker-compose.yaml
 
@@ -44,11 +45,11 @@ guodong@mars simple % docker-compose down
 
 ### 2.使用docker compose实现负载均衡
 
-- 创建nginx.conf
+- 创建[_nginx.conf_](balance/nginx.conf)
 
 > 参见：nginx-docker-compose/balance/nginx.conf
 
-- 创建docker-compose.yaml
+- 创建[_docker-compose.yaml_](balance/docker-compose.yaml)
 
 > 参见：nginx-docker-compose/balance/docker-compose.yaml
 
