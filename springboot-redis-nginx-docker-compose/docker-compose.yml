@@ -2,7 +2,7 @@ version: "3"
 
 services:
   webapp1:
-    container_name: springboot-redis-docker-8083
+    container_name: webapp-8083
     build: webapp
     ports:
       - "8083:8082"
@@ -10,7 +10,7 @@ services:
       - redis
 
   webapp2:
-    container_name: springboot-redis-docker-8084
+    container_name: webapp-8084
     build: webapp
     ports:
       - "8084:8082"
@@ -18,7 +18,7 @@ services:
       - redis
 
   webapp3:
-    container_name: springboot-redis-docker-8085
+    container_name: webapp-8085
     build: webapp
     ports:
       - "8085:8082"
@@ -36,7 +36,8 @@ services:
     container_name: master
     image: nginx
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/log/:/var/log/nginx/
     ports:
       - "8089:80"
     depends_on:

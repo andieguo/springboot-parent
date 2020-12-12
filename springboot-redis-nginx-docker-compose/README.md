@@ -27,7 +27,7 @@ version: "3"
 
 services:
   webapp1:
-    container_name: springboot-redis-docker-8083
+    container_name: webapp-8083
     build: webapp
     ports:
       - "8083:8082"
@@ -75,8 +75,8 @@ Step 7/18 : RUN mvn -B -f pom.xml -s /usr/share/maven/ref/settings-docker.xml in
  ---> Running in 515c321a3ff3
 [INFO] Scanning for projects...
 [INFO] 
-[INFO] ------< org.springframework.boot:springboot-redis-docker-compose >------
-[INFO] Building springboot-redis-docker-compose 1.0.0
+[INFO] ------< org.springframework.boot:webapp-compose >------
+[INFO] Building webapp-compose 1.0.0
 
 Successfully built edca08cf27e1
 Successfully tagged springboot-redis-nginx-docker-compose_webapp3:latest
@@ -102,9 +102,9 @@ $ docker-compose up -d
 guodong@mars springboot-redis-nginx-docker-compose % docker-compose up -d
 Creating network "springboot-redis-nginx-docker-compose_default" with the default driver
 Creating redis ... done
-Creating springboot-redis-docker-8084 ... done
-Creating springboot-redis-docker-8083 ... done
-Creating springboot-redis-docker-8085 ... done
+Creating webapp-8084 ... done
+Creating webapp-8083 ... done
+Creating webapp-8085 ... done
 Creating master                       ... done
 
 ```
@@ -116,9 +116,9 @@ Creating master                       ... done
 guodong@mars springboot-redis-nginx-docker-compose % docker ps
 CONTAINER ID        IMAGE                                           COMMAND                  CREATED             STATUS              PORTS                              NAMES
 c5d84b134dfb        nginx                                           "/docker-entrypoint.…"   33 seconds ago      Up 32 seconds       0.0.0.0:8089->80/tcp               master
-3802014a26f2        springboot-redis-nginx-docker-compose_webapp3   "java -cp app:app/li…"   34 seconds ago      Up 33 seconds       8080/tcp, 0.0.0.0:8085->8082/tcp   springboot-redis-docker-8085
-3b3fc66a4122        springboot-redis-nginx-docker-compose_webapp2   "java -cp app:app/li…"   34 seconds ago      Up 33 seconds       8080/tcp, 0.0.0.0:8084->8082/tcp   springboot-redis-docker-8084
-d3c74ea6fa72        springboot-redis-nginx-docker-compose_webapp1   "java -cp app:app/li…"   34 seconds ago      Up 33 seconds       8080/tcp, 0.0.0.0:8083->8082/tcp   springboot-redis-docker-8083
+3802014a26f2        springboot-redis-nginx-docker-compose_webapp3   "java -cp app:app/li…"   34 seconds ago      Up 33 seconds       8080/tcp, 0.0.0.0:8085->8082/tcp   webapp-8085
+3b3fc66a4122        springboot-redis-nginx-docker-compose_webapp2   "java -cp app:app/li…"   34 seconds ago      Up 33 seconds       8080/tcp, 0.0.0.0:8084->8082/tcp   webapp-8084
+d3c74ea6fa72        springboot-redis-nginx-docker-compose_webapp1   "java -cp app:app/li…"   34 seconds ago      Up 33 seconds       8080/tcp, 0.0.0.0:8083->8082/tcp   webapp-8083
 c8271924d7b2        redis:latest                                    "docker-entrypoint.s…"   35 seconds ago      Up 34 seconds       0.0.0.0:6379->6379/tcp             redis
 ```
 
@@ -143,14 +143,14 @@ the current page has been accessed 4 times
 ```
 guodong@mars springboot-redis-nginx-docker-compose % docker-compose down 
 Stopping master                       ... done
-Stopping springboot-redis-docker-8085 ... done
-Stopping springboot-redis-docker-8084 ... done
-Stopping springboot-redis-docker-8083 ... done
+Stopping webapp-8085 ... done
+Stopping webapp-8084 ... done
+Stopping webapp-8083 ... done
 Stopping redis                        ... done
 Removing master                       ... done
-Removing springboot-redis-docker-8085 ... done
-Removing springboot-redis-docker-8084 ... done
-Removing springboot-redis-docker-8083 ... done
+Removing webapp-8085 ... done
+Removing webapp-8084 ... done
+Removing webapp-8083 ... done
 Removing redis                        ... done
 Removing network springboot-redis-nginx-docker-compose_default
 
