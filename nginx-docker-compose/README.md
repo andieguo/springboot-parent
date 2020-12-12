@@ -2,7 +2,7 @@
 
 本工程使用 docker + compose + nginx 实现负载均衡
 
-### 1.使用docker compose实现nginx部署
+### 使用docker compose实现nginx部署
 
 - nginx 镜像获取
 
@@ -43,9 +43,9 @@ this is index,port is 8087
 guodong@mars simple % docker-compose down
 ```
 
-### 2.使用docker compose实现负载均衡
+### 使用docker compose实现负载均衡
 
-- 创建[_nginx.conf_](balance/nginx.conf)
+- 创建[_nginx.conf_](balance/nginx-master/conf/nginx.conf)
 
 > upstream: 使用加权负载均衡，权重越大的服务器，被分配到的次数就会越多，通常用于后端服务器性能不一致的情况。  
 > proxy_pass：指定需要反向代理的服务器地址，可以是一个upstream池
@@ -159,5 +159,7 @@ YAML配置：mapping values are not allowed here
 
 ### 参考文献
 
-- 反向代理
-- nginx文件解析
+- [upstream与proxy_pass实现反向代理配置教程](http://www.linuxe.cn/post-182.html)
+- [Nginx访问日志（access_log）配置及信息详解](https://www.cnblogs.com/czlun/articles/7010591.html)
+- [当初我要是这么学习Nginx就好了！（多图详解）](https://www.jianshu.com/p/e90050dc89b6)
+- [Nginx 动态负载 upstream 三种方案](https://blog.51cto.com/qiangsh/2021399)
