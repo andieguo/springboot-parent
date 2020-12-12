@@ -47,11 +47,70 @@ guodong@mars simple % docker-compose down
 
 - 创建[_nginx.conf_](balance/nginx.conf)
 
-> 参见：nginx-docker-compose/balance/nginx.conf
+> upstream: 使用加权负载均衡，权重越大的服务器，被分配到的次数就会越多，通常用于后端服务器性能不一致的情况。  
+> proxy_pass：指定需要反向代理的服务器地址，可以是一个upstream池
+
+```
+    upstream www.andieguo.com {
+        server nginx_8085 weight=1;
+        server nginx_8086 weight=2;
+        server nginx_8087 weight=3;
+    }
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+            # 反向代理
+            proxy_pass   http://www.andieguo.com;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+```
 
 - 创建[_docker-compose.yaml_](balance/docker-compose.yaml)
 
-> 参见：nginx-docker-compose/balance/docker-compose.yaml
+> docker hub的nginx镜像可挂载的volume如下：
+> - 日志位置：/var/log/nginx/  
+> - 配置文件位置：/etc/nginx/  
+> - 项目位置：/usr/share/nginx/html  
+
+```
+version: "3"
+
+services:
+ web_1:
+  container_name: nginx_8085
+  image: nginx
+  volumes:
+   - ./html-8085/:/usr/share/nginx/html
+   - ./log/:/var/log/nginx/
+  ports:
+   - "8085:80"
+
+ ...
+
+ master:
+  container_name: master
+  image: nginx
+  volumes:
+   - ./nginx.conf:/etc/nginx/nginx.conf
+   - ./log/:/var/log/nginx/
+  ports:
+   - "8089:80"
+  depends_on:
+   - web_1
+   - web_2
+   - web_3
+
+```
 
 - 启动docker-compose
 ```
