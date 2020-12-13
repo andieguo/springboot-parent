@@ -17,5 +17,6 @@
     <modules>
         <module>springboot-webapp-docker</module>
         <module>springboot-redis-docker</module>
+        <module>springboot-mysql-docker</module>
     </modules>
 </project>

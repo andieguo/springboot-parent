@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  webapp1:
+    container_name: springboot-mysql-8083
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8082"
+    depends_on:
+      - db
+
+  webapp2:
+    container_name: springboot-mysql-8084
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8082"
+    depends_on:
+      - db
+
+  webapp3:
+    container_name: springboot-mysql-8085
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8082"
+    depends_on:
+      - db
+
+  db:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: example
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
