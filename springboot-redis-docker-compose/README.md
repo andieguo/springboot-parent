@@ -1,4 +1,4 @@
-## webapp-compose
+## springboot-redis-docker-compose
 ### 工程结构
 
 本工程是一个通过docker + compose 编译运行springboot + redis 应用的demo
