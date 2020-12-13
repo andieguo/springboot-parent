@@ -131,7 +131,7 @@ guodong@mars springboot-mysql-docker % java -jar target/springboot-mysql-docker-
 ```
 guodong@mars springboot-mysql-docker % curl localhost:8082/home
 Stay hungry, stay foolish                                                                                                                   
-guodong@mars springboot-mysql-docker % curl localhost:8082/all 
+guodong@mars springboot-mysql-docker % curl localhost:8082/users/all 
 [{"id":1,"name":"andyguo.gd","email":"andieguo@foxmail.com"},{"id":2,"name":"jack","email":"jack@foxmail.com"},{"id":3,"name":"jack","email":"jack"},{"id":4,"name":"jack1","email":"jack"}]                                                                           
 ```
 
@@ -216,11 +216,11 @@ guodong@mars springboot-mysql-docker % docker ps
 - 访问web应用 
 
 ```
-guodong@mars springboot-mysql-docker % curl localhost:8082/all
+guodong@mars springboot-mysql-docker % curl localhost:8082/users/all
 [{"id":1,"name":"andyguo.gd","email":"andieguo@foxmail.com"},{"id":2,"name":"jack","email":"jack@foxmail.com"},{"id":3,"name":"jack","email":"jack"},{"id":4,"name":"jack1","email":"jack"}]%                                                                                             
-guodong@mars springboot-mysql-docker % curl localhost:8083/all
+guodong@mars springboot-mysql-docker % curl localhost:8083/users/all
 [{"id":1,"name":"andyguo.gd","email":"andieguo@foxmail.com"},{"id":2,"name":"jack","email":"jack@foxmail.com"},{"id":3,"name":"jack","email":"jack"},{"id":4,"name":"jack1","email":"jack"}]%                                                                                             
-guodong@mars springboot-mysql-docker % curl localhost:8084/all
+guodong@mars springboot-mysql-docker % curl localhost:8084/users/all
 [{"id":1,"name":"andyguo.gd","email":"andieguo@foxmail.com"},{"id":2,"name":"jack","email":"jack@foxmail.com"},{"id":3,"name":"jack","email":"jack"},{"id":4,"name":"jack1","email":"jack"}]%                                                                                                                                                                                            
 ```
  
