@@ -11,7 +11,7 @@
 - [springboot-webapp-docker](springboot-webapp-docker/README.md)
 > springboot webapp，通过docker命令编译部署
 - [springboot-redis-docker](springboot-redis-docker/README.md)
-> springboot集成redis，通过docker命令编译部署
+> springboot集成redis，实现本地部署和docker命令编译部署
 - [springboot-redis-docker-compose](springboot-redis-docker-compose/README.md)
 > springboot集成redis，通过docker-compose编译部署
 - [nginx-docker-compose](nginx-docker-compose/README.md)
@@ -19,4 +19,6 @@
 - [springboot-redis-nginx-docker-compose](springboot-redis-nginx-docker-compose/README.md)
 > springboot集成redis，使用nginx实现负载均衡，通过docker-compose编译部署
 - [springboot-mysql-docker](springboot-mysql-docker/README.md)
-> springboot集成mysql，通过docker命令编译部署
+> springboot集成mysql，实现本地部署和docker命令编译部署
+- [springboot-mysql-docker-compose](springboot-mysql-docker-compose/README.md)
+> springboot集成mysql，通过docker-compose编译部署
