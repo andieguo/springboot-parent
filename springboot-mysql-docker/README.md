@@ -46,15 +46,15 @@ alpine/git          latest              76a4083eacef        8 days ago          
 > --name：设置容器别名
 
 ``` bash
-guodong@mars ~ % docker run -p 3306:3306 --name mysql-v2 -e MYSQL_ROOT_PASSWORD=root -d mysql    
+guodong@mars ~ % docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root -d mysql    
 2b444ea8ceac0076d276f565b8c98a91bb741652957aef277c7d0a83699fb287
 Last login: Sun Nov 29 13:34:17 on ttys000
 ```
 
-• 连接到mysql容器的伪终端
+• 连接到mysql容器并创建数据库
 
-> 链接到mysql容器伪终端后，通过mysql -r root -p访问mysql服务端，默认密码root
-> 创建数据库example;
+> 【**很关键**】链接到mysql容器伪终端后，通过mysql -r root -p访问mysql服务端，默认密码root  
+> 【**很关键**】创建数据库example;
 
 ``` bash
 guodong@mars ~ % docker exec -it 2b444ea8ceac0076d276f565b8c98a91bb741652957aef277c7d0a83699fb287 /bin/sh; exit
@@ -207,9 +207,9 @@ springboot-mysql-docker                         latest              b0e277cfb0bd
   内网是走docker0的网桥，互相之间是Ping的通的，但是docker run 建立容器的时候，它的Ip地址是不可控制的，所以docker 用link的方式使web能够访问到db中的数据。
 
 ``` bash
-guodong@mars springboot-mysql-docker % docker run -p 8082:8082 --name springboot-mysql-docker-8082 --link mysql-v2:db -d springboot-mysql-docker
-guodong@mars springboot-mysql-docker % docker run -p 8083:8082 --name springboot-mysql-docker-8083 --link mysql-v2:db -d springboot-mysql-docker
-guodong@mars springboot-mysql-docker % docker run -p 8084:8082 --name springboot-mysql-docker-8084 --link mysql-v2:db -d springboot-mysql-docker
+guodong@mars springboot-mysql-docker % docker run -p 8082:8082 --name springboot-mysql-docker-8082 --link mysql:db -d springboot-mysql-docker
+guodong@mars springboot-mysql-docker % docker run -p 8083:8082 --name springboot-mysql-docker-8083 --link mysql:db -d springboot-mysql-docker
+guodong@mars springboot-mysql-docker % docker run -p 8084:8082 --name springboot-mysql-docker-8084 --link mysql:db -d springboot-mysql-docker
 guodong@mars springboot-mysql-docker % docker ps
 ```
 
@@ -217,11 +217,11 @@ guodong@mars springboot-mysql-docker % docker ps
 
 ```
 guodong@mars springboot-mysql-docker % curl localhost:8082/users/all
-[{"id":1,"name":"andyguo.gd","email":"andieguo@foxmail.com"},{"id":2,"name":"jack","email":"jack@foxmail.com"},{"id":3,"name":"jack","email":"jack"},{"id":4,"name":"jack1","email":"jack"}]%                                                                                             
+[{"id":1,"name":"andieguo","email":"andieguo@foxmail.com"}] 
 guodong@mars springboot-mysql-docker % curl localhost:8083/users/all
-[{"id":1,"name":"andyguo.gd","email":"andieguo@foxmail.com"},{"id":2,"name":"jack","email":"jack@foxmail.com"},{"id":3,"name":"jack","email":"jack"},{"id":4,"name":"jack1","email":"jack"}]%                                                                                             
+[{"id":1,"name":"andieguo","email":"andieguo@foxmail.com"}]
 guodong@mars springboot-mysql-docker % curl localhost:8084/users/all
-[{"id":1,"name":"andyguo.gd","email":"andieguo@foxmail.com"},{"id":2,"name":"jack","email":"jack@foxmail.com"},{"id":3,"name":"jack","email":"jack"},{"id":4,"name":"jack1","email":"jack"}]%                                                                                                                                                                                            
+[{"id":1,"name":"andieguo","email":"andieguo@foxmail.com"}]
 ```
  
 
