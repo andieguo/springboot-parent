@@ -18,3 +18,5 @@
 > 使用nginx实现负载均衡，通过docker-compose编译部署
 - [springboot-redis-nginx-docker-compose](springboot-redis-nginx-docker-compose/README.md)
 > springboot集成redis，使用nginx实现负载均衡，通过docker-compose编译部署
+- [springboot-mysql-docker](springboot-mysql-docker/README.md)
+> springboot集成mysql，通过docker命令编译部署
