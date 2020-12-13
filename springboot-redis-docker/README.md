@@ -69,26 +69,79 @@ OK
 
 ```
 
-#### Docker部署SpringBoot应用
+#### 本地部署SpringBoot应用
+
+> 本地部署SpringBoot应用 和 Docker环境部署SpringBoot应用 是相互独立的，本地环境只能部署一台webapp，Docker环境可以部署多台webapp用于模拟分布式环境；
 
 - mvn命令打包springboot应用
 
 ``` bash 
-guodong@mars springboot-redis-docker % mvn package spring-boot:repackage
+guodong@mars springboot-redis-docker % mvn package
+```
+
+- 本地启动springboot应用
+
+> 2020-12-13 12:08:35.408  INFO 15242 --- [           main] c.a.springboot.SpringBootWebApplication  : No active profile set, falling back to default profiles: default  
+> 本地启动没有指定profile，默认加载application.properties文件，使用localhost作为spring.redis.host
+
+``` bash 
+guodong@mars springboot-redis-docker % java -jar target/springboot-redis-docker-1.0.0.jar
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.0)
+
+2020-12-13 12:08:35.405  INFO 15242 --- [           main] c.a.springboot.SpringBootWebApplication  : Starting SpringBootWebApplication v1.0.0 using Java 1.8.0_201 on mars.local with PID 15242 (/Users/guodong/Documents/gitworkspace/springboot-parent/springboot-redis-docker/target/springboot-redis-docker-1.0.0.jar started by guodong in /Users/guodong/Documents/gitworkspace/springboot-parent/springboot-redis-docker)
+2020-12-13 12:08:35.408  INFO 15242 --- [           main] c.a.springboot.SpringBootWebApplication  : No active profile set, falling back to default profiles: default
+2020-12-13 12:08:36.187  INFO 15242 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-12-13 12:08:36.190  INFO 15242 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-12-13 12:08:38.201  INFO 15242 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2020-12-13 12:08:38.212  INFO 15242 --- [           main] c.a.springboot.SpringBootWebApplication  : Started SpringBootWebApplication in 3.413 seconds (JVM running for 3.833)
+
+```
+
+- 访问web应用
+```
+guodong@mars springboot-redis-docker % curl localhost:8082
+the current page ipAddress is 127.0.0.1
+the current page has been accessed 13 times                                                                                                
+guodong@mars springboot-redis-docker % curl localhost:8082
+the current page ipAddress is 127.0.0.1
+the current page has been accessed 14 times                                                                                                
+```
+
+- 关闭web应用
+> 关闭本地web应用，释放8082端口
+
+
+#### Docker部署SpringBoot应用
+
+> 通过Docker环境部署多个spring boot webapp应用，模拟分布式环境
+
+- mvn命令打包springboot应用
+
+``` bash 
+guodong@mars springboot-redis-docker % mvn package
 ```
 
 - 构建[Dockerfile](src/docker/Dockerfile)
 
 > 1) VOLUME ["/data"] 创建一个可以从本地主机或其他容器挂载的挂载点；  
 > 2) ADD \<src> \<dest> 该命令将复制指定的\<src>到容器中的\<dest>  
-> 3) ENTRYPOINT 配置容器启动后执行的命令，每个Dockerfile中只能有一个ENTRYPOINT  
+> 3) ENTRYPOINT 配置容器启动后执行的命令，每个Dockerfile中只能有一个ENTRYPOINT
+> - java -jar -Dspring.profiles.active=redis /springboot-redis-docker-1.0.0.jar 
+> - java命令指定SpringBoot的profile环境为redis，启动时加载application-redis.properties
 > 4) EXPOSE <port> 告诉Docker服务端容器暴露的端口号  
 
 ``` bash
 FROM java:8
 VOLUME /tmp
 ADD springboot-redis-docker-1.0.0.jar springboot-redis-docker-1.0.0.jar
-ENTRYPOINT ["java","-jar","/springboot-redis-docker-1.0.0.jar"]
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=redis","/springboot-redis-docker-1.0.0.jar"]
 EXPOSE 8082
 ```
 
@@ -121,10 +174,20 @@ guodong@mars springboot-redis-docker % docker run -p 8084:8082 --name springboot
 guodong@mars springboot-redis-docker % docker ps
 ```
 
-- 访问  
-http://localhost:8082  
-http://localhost:8083  
-http://localhost:8084  
+- 访问web应用 
+
+```
+guodong@mars springboot-redis-docker % curl localhost:8082
+the current page ipAddress is 172.17.0.4
+the current page has been accessed 17 times%                                                                                                 
+guodong@mars springboot-redis-docker % curl localhost:8083
+the current page ipAddress is 172.17.0.5
+the current page has been accessed 18 times%                                                                                                 
+guodong@mars springboot-redis-docker % curl localhost:8084
+the current page ipAddress is 172.17.0.6
+the current page has been accessed 19 times%                                                                                                 
+```
+ 
 
 ### SpringBoot与Redis集成解读
 1.SpringBoot与web集成
