@@ -18,5 +18,6 @@
         <module>springboot-webapp-docker</module>
         <module>springboot-redis-docker</module>
         <module>springboot-mysql-docker</module>
+        <module>springboot-slf4j-docker</module>
     </modules>
 </project>

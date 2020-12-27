@@ -22,3 +22,5 @@
 > springboot集成mysql，实现本地部署和docker命令编译部署
 - [springboot-mysql-docker-compose](springboot-mysql-docker-compose/README.md)
 > springboot集成mysql，通过docker-compose编译部署
+- [springboot-slf4j-docker](springboot-slf4j-docker/README.md)
+> springboot集成slf4j，并对logback日志配置进行解释，实现docker化应用部署
